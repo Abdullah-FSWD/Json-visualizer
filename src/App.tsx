@@ -1,18 +1,18 @@
-import { ReactFlow } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-
-const initialNodes = [
-  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
-  { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-];
-const initialEdges = [{ id: 'n1-n2', source: 'n1', target: 'n2' }];
-import '@xyflow/react/dist/style.css';
+import { Button } from './components/ui/button';
+import { Textarea } from './components/ui/textarea';
 
 function App() {
   return (
     <>
-      <div style={{ width: '60vw', height: '100vh' }}>
-        <ReactFlow nodes={initialNodes} edges={initialEdges} fitView />
+      <div className="flex justify-around gap-2 flex-1">
+        <div className="grid w-full gap-2">
+          <Textarea
+            className="min-h-64"
+            placeholder="Type your message here."
+          />
+          <Button variant="outline">Submit</Button>
+        </div>
+        <div className="border border-red-500 w-4/3">Hellow world </div>
       </div>
     </>
   );
