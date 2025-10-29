@@ -5,9 +5,27 @@ import { Separator } from './components/ui/separator';
 import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
 
+type NodeType = {
+  id: string;
+  type: 'object' | 'array' | 'primitive';
+  label: string;
+  path: string;
+  x: number;
+  y: number;
+};
+
+type EdgeType = {
+  id: string;
+  source: string;
+  target: string;
+  label: string;
+};
+
 function App() {
   const [value, setValue] = useState<string>('');
   const [error, setError] = useState<any>('');
+  const [nodes, setNodes] = useState<NodeTypes[]>([]);
+  const [edges, setEdges] = useState<EdgeType[]>([]);
 
   const sampleJsonValue = `{
   "user": {
