@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button } from './components/ui/button';
 import { Textarea } from './components/ui/textarea';
 import { Separator } from './components/ui/separator';
+import { Toaster } from './components/ui/sonner';
+import { toast } from 'sonner';
 
 function App() {
   const [value, setValue] = useState<string>('');
@@ -11,8 +13,9 @@ function App() {
     try {
       const parseValue = JSON.parse(value);
       console.log('parsed value', parseValue);
-    } catch (error: { message: string }) {
-      throw new Error(error.message);
+      setError('');
+    } catch (err: { message: string }) {
+      toast.error(err.message);
     }
   }
 
@@ -22,6 +25,7 @@ function App() {
   }
   return (
     <>
+      <Toaster position="top-right" richColors />
       <div className="bg-background ">
         <header className="bg-zinc-100 text-muted-foreground p-8 border">
           <h1 className="text-3xl mb-2 font-semibold">JSON Visualizer</h1>
