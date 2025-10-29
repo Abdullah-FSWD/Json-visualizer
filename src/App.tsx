@@ -5,22 +5,14 @@ import { Separator } from './components/ui/separator';
 
 function App() {
   const [value, setValue] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   function handleSubmit() {
-    const validJson: boolean = checkValidJson(value);
-    if (validJson) {
-      console.log(value);
-    } else {
-      alert(`${value} is not a valid JSON`);
-    }
-  }
-
-  function checkValidJson(str: string) {
     try {
-      JSON.parse(str);
-      return true;
-    } catch {
-      return false;
+      const parseValue = JSON.parse(value);
+      console.log('parsed value', parseValue);
+    } catch (error: { message: string }) {
+      throw new Error(error.message);
     }
   }
 
