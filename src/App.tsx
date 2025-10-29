@@ -1,21 +1,83 @@
+import { useState } from 'react';
 import { Button } from './components/ui/button';
 import { Textarea } from './components/ui/textarea';
+import { Separator } from './components/ui/separator';
 
 function App() {
+  const [value, setValue] = useState<string>('');
+
+  function handleSubmit() {
+    const validJson: boolean = checkValidJson(value);
+    if (validJson) {
+      console.log(value);
+    } else {
+      alert(`${value} is not a valid JSON`);
+    }
+  }
+
+  function checkValidJson(str: string) {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  function handleChange(e) {
+    // console.log(e.target.value);
+    setValue(e.target.value);
+  }
   return (
     <>
-      <div className="flex justify-around gap-2 flex-1">
-        <div className="grid w-full gap-2">
-          <Textarea
-            className="min-h-64"
-            placeholder="Type your message here."
-          />
-          <Button variant="outline">Submit</Button>
+      <div className="bg-background ">
+        <header className="bg-zinc-100 text-muted-foreground p-8 border">
+          <h1 className="text-3xl mb-2 font-semibold">JSON Visualizer</h1>
+        </header>
+        <div className=" my-auto mx-0 p-2 bg-muted-foreground h-auto flex flex-1 gap-2 ">
+          <div className="bg-background p-8 rounded-xl flex-none min-w-96 max-w-28">
+            <Textarea
+              className="min-h-64 max-h-full w-full p-4 border-2 border-gray-300 rounded-lg font-mono mb-4"
+              placeholder="Type your message here."
+              value={value}
+              onChange={handleChange}
+            />
+            <Button
+              onClick={handleSubmit}
+              className="w-full text-muted-foreground"
+              variant="outline"
+            >
+              Generat Visuals
+            </Button>
+          </div>
+          <div className="flex-1 bg-background p-8 rounded"></div>
         </div>
-        <div className="border border-red-500 w-4/3">Hellow world </div>
       </div>
+      <Separator />
     </>
   );
 }
 
 export default App;
+
+//  <div>
+//       <header className="p-8 shadow-sm ">
+//         <h1 className="text-3xl text-muted-foreground mb-2 font-bold">
+//           JSON Tree Visualizer
+//         </h1>
+//         <p>Visualize your JSON data as a tree structure</p>
+//       </header>
+//       <div className="grid w-full gap-2 max-w-1/4 p-3">
+//         <Textarea
+//           className="min-h-64 max-h-full"
+//           placeholder="Type your message here."
+//           value={value}
+//           onChange={handleChange}
+//         />
+//         <Button type="submit" variant="outline" onClick={handleSubmit}>
+//           Submit
+//         </Button>
+//       </div>
+//       <Separator />
+//       <div className="border border-red-500 w-4/3 ">Hellow world </div>
+//     </div>
