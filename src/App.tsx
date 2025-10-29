@@ -41,10 +41,24 @@ function App() {
   ]
 }`;
 
+  function convertJsonToNodeAndEdges(jsonValue: any) {
+    const nodes: NodeType[] = [];
+    const edges: EdgeType[] = [];
+    // TODO: write implimentation to convert the json data to node and edges and then return node and edges
+
+    return { nodes, edges };
+  }
+
   function handleSubmit() {
     try {
       const parseValue = JSON.parse(value);
-      console.log('parsed value', parseValue);
+      const { nodes: newNodes, edges: newEdges } =
+        convertJsonToNodeAndEdges(parseValue);
+
+      console.log(newNodes);
+      console.log(newEdges);
+      setNodes(newNodes);
+      setEdges(newEdges);
       setError('');
     } catch (err: { message: string }) {
       toast.error(err.message);
