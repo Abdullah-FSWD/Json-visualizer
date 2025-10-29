@@ -7,7 +7,21 @@ import { toast } from 'sonner';
 
 function App() {
   const [value, setValue] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [error, setError] = useState<any>('');
+
+  const sampleJsonValue = `{
+  "user": {
+    "name": "Alice",
+    "age": 28,
+    "email": "alice@example.com"
+  },
+  "products": [
+    {
+      "id": 1,
+      "name": "Laptop"
+    }
+  ]
+}`;
 
   function handleSubmit() {
     try {
@@ -22,6 +36,11 @@ function App() {
   function handleChange(e) {
     // console.log(e.target.value);
     setValue(e.target.value);
+  }
+
+  function loadSmapleJson() {
+    setValue(sampleJsonValue);
+    console.log(sampleJsonValue);
   }
   return (
     <>
@@ -38,13 +57,22 @@ function App() {
               value={value}
               onChange={handleChange}
             />
-            <Button
-              onClick={handleSubmit}
-              className="w-full text-muted-foreground"
-              variant="outline"
-            >
-              Generat Visuals
-            </Button>
+            <div className="flex flex-col-reverse gap-2">
+              <Button
+                onClick={handleSubmit}
+                className="w-full text-muted-foreground bg-primary-foreground"
+                variant="outline"
+              >
+                Generat Visuals
+              </Button>
+              <Button
+                onClick={loadSmapleJson}
+                className="w-full text-muted-foreground"
+                variant="secondary"
+              >
+                Load sample
+              </Button>
+            </div>
           </div>
           <div className="flex-1 bg-background p-8 rounded"></div>
         </div>
