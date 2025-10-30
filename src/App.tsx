@@ -4,6 +4,7 @@ import { Textarea } from './components/ui/textarea';
 import { Separator } from './components/ui/separator';
 import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
+import dagre from '@dagrejs/dagre';
 
 type NodeType = {
   id: string;
@@ -124,7 +125,6 @@ function App() {
         });
         console.log('isArray', key);
       } else {
-        // handle other value
         const nodeValue = typeof data === 'string' ? `"${data}"` : String(data);
         nodes.push({
           id: currentNodeId,
@@ -140,6 +140,31 @@ function App() {
     }
 
     convertJsonData(jsonValue, null, 'root', '$', 0);
+
+    const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(
+      () => ({})
+    );
+
+    const nodeWidth = 172;
+    const nodeHeight = 36;
+
+    dagreGraph.setGraph({ rankdir: 'TB' });
+
+    nodes.forEach((node) => {
+      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+    });
+
+    edges.forEach((edge) => {
+      dagreGraph.setEdge(edge.source, edge.target);
+    });
+
+    dagre.layout(dagreGraph);
+
+    nodes.forEach((node) => {
+      const nodeWithPosition = dagreGraph.node(node.id);
+      node.x = nodeWithPosition.x;
+      node.y = nodeWithPosition.y;
+    });
 
     return { nodes, edges };
   }
