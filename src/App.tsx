@@ -103,6 +103,15 @@ function App() {
         console.log('isArray', key);
       } else {
         // handle other value
+        const nodeValue = typeof data === 'string' ? `"${data}"` : String(data);
+        nodes.push({
+          id: currentNodeId,
+          type: 'primitive',
+          label: `${key}: ${nodeValue}`,
+          path: path,
+          x: 0,
+          y: 0,
+        });
         console.log('Primitive:', key, data);
       }
       return currentNodeId;
