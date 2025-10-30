@@ -198,39 +198,54 @@ function App() {
   return (
     <>
       <Toaster position="top-center" richColors />
-      <div className="bg-background ">
-        <header className="bg-zinc-100 text-muted-foreground p-8 border">
-          <h1 className="text-3xl mb-2 font-semibold">JSON Visualizer</h1>
-        </header>
-        <div className=" my-auto mx-0 p-2 bg-muted-foreground h-auto flex flex-1 gap-2 ">
-          <div className="bg-background p-8 rounded-xl flex-none min-w-96 max-w-28">
-            <Textarea
-              className="min-h-64 max-h-full w-full p-4 border-2 border-gray-300 rounded-lg font-mono mb-4"
-              placeholder="Type your message here."
-              value={value}
-              onChange={handleChange}
-            />
-            <div className="flex flex-col-reverse gap-2">
-              <Button
-                onClick={handleSubmit}
-                className="w-full text-muted-foreground bg-primary-foreground"
-                variant="outline"
-              >
-                Generat Visuals
-              </Button>
-              <Button
-                onClick={loadSmapleJson}
-                className="w-full text-muted-foreground"
-                variant="secondary"
-              >
-                Load sample
-              </Button>
-            </div>
+      {/* <div className="flex"> */}
+      <header className="bg-zinc-100 text-muted-foreground p-8 border">
+        <h1 className="text-3xl mb-2 font-semibold">JSON Visualizer</h1>
+      </header>
+      <div className="w-full my-auto p-2 bg-muted-foreground h-auto flex flex-1 gap-2  ">
+        <div className="bg-background p-8 mx-4 rounded-xl flex-none min-w-96 max-w-28">
+          <Textarea
+            className="min-h-64 max-h-full w-full p-4 border-2 border-gray-300 rounded-lg font-mono mb-4"
+            placeholder="Type your message here."
+            value={value}
+            onChange={handleChange}
+          />
+          <div className="flex flex-col-reverse gap-2">
+            <Button
+              onClick={handleSubmit}
+              className="w-full text-muted-foreground bg-primary-foreground"
+              variant="outline"
+            >
+              Generat Visuals
+            </Button>
+            <Button
+              onClick={loadSmapleJson}
+              className="w-full text-muted-foreground"
+              variant="secondary"
+            >
+              Load sample
+            </Button>
           </div>
-          <div className="flex-1 bg-background p-8 rounded"></div>
         </div>
+        {/* {nodes.length > 0 && ( */}
+        <div className="bg-white rounded-lg shadow-md p-8 flex-1">
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Tree Structure
+          </h2>
+          <p className="text-gray-600 mb-4">
+            Generated {nodes.length} nodes and {edges.length} edges
+          </p>
+
+          <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-96">
+            <p className="text-center text-gray-400 pt-40">
+              all nodes come inside this div
+            </p>
+          </div>
+        </div>
+        {/* )} */}
       </div>
       <Separator />
+      {/* </div> */}
     </>
   );
 }
