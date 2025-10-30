@@ -62,6 +62,8 @@ function App() {
     ): string {
       const currentNodeId = `node-${nodeIdCounter++}`;
 
+      console.log('path', path);
+
       const isArray = Array.isArray(data);
       const isObject = data !== null && typeof data === 'object' && !isArray;
 
@@ -77,7 +79,7 @@ function App() {
 
         Object.keys(data).forEach((childKey) => {
           const childPath = `${path}.${childKey}`;
-          convertJsonData(
+          const childNodeId = convertJsonData(
             data[childKey],
             currentNodeId,
             childKey,
@@ -86,6 +88,13 @@ function App() {
           );
 
           // TODO: Create edge from parent to child
+
+          edges.push({
+            id: `edge-${currentNodeId}-${childNodeId}`,
+            source: currentNodeId,
+            target: childNodeId,
+            label: childKey,
+          });
         });
 
         console.log('isObject', key);
