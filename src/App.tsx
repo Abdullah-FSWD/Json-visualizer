@@ -44,7 +44,33 @@ function App() {
   function convertJsonToNodeAndEdges(jsonValue: any) {
     const nodes: NodeType[] = [];
     const edges: EdgeType[] = [];
-    // TODO: write implimentation to convert the json data to node and edges and then return node and edges
+    let nodeIdCounter = 0;
+
+    function convertJsonData(
+      data: any,
+      parentId: string | null,
+      key: string,
+      path: string,
+      level: number
+    ): string {
+      const currentNodeId = `node-${nodeIdCounter++}`;
+      const isArray = Array.isArray(data);
+      const isObject = data !== null && typeof data === 'object' && !isArray;
+
+      if (isObject) {
+        // TODO : handle object operation
+        console.log('isObject', key);
+      } else if (isArray) {
+        // TODO : handle array operations
+        console.log('isArray', key);
+      } else {
+        // handle other value
+        console.log('value1', key, data);
+      }
+      return '';
+    }
+
+    convertJsonData(value, null, 'root', '$', 0);
 
     return { nodes, edges };
   }
@@ -72,11 +98,11 @@ function App() {
 
   function loadSmapleJson() {
     setValue(sampleJsonValue);
-    console.log(sampleJsonValue);
+    // console.log(sampleJsonValue);
   }
   return (
     <>
-      <Toaster position="top-right" richColors />
+      <Toaster position="top-center" richColors />
       <div className="bg-background ">
         <header className="bg-zinc-100 text-muted-foreground p-8 border">
           <h1 className="text-3xl mb-2 font-semibold">JSON Visualizer</h1>
