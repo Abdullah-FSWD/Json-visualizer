@@ -62,16 +62,8 @@ function App() {
     ): string {
       const currentNodeId = `node-${nodeIdCounter++}`;
 
-      console.log('Processing:', key);
-      console.log('Data type:', typeof data);
-      console.log('Is null?:', data === null);
-      console.log('Data:', data);
-
       const isArray = Array.isArray(data);
       const isObject = data !== null && typeof data === 'object' && !isArray;
-
-      console.log('isArray:', isArray);
-      console.log('isObject:', isObject);
 
       if (isObject) {
         nodes.push({
