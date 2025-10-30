@@ -29,9 +29,9 @@ function App() {
 
   //   const sampleJsonValue = `{
   //   "user": {
-  //     "name": "Alice",
+  //     "name": "Rahul",
   //     "age": 28,
-  //     "email": "alice@example.com"
+  //     "email": "Rahul@gamil.com"
   //   },
   //   "products": [
   //     {
@@ -43,7 +43,7 @@ function App() {
 
   const sampleJsonValue = `{
   "user": {
-    "name": "Alice",
+    "name": "Rahul",
     "age": 28
   }
 }`;
@@ -75,6 +75,19 @@ function App() {
           y: 0,
         });
 
+        Object.keys(data).forEach((childKey) => {
+          const childPath = `${path}.${childKey}`;
+          convertJsonData(
+            data[childKey],
+            currentNodeId,
+            childKey,
+            childPath,
+            level + 1
+          );
+
+          // TODO: Create edge from parent to child
+        });
+
         console.log('isObject', key);
       } else if (isArray) {
         // TODO : handle array operations
@@ -83,7 +96,7 @@ function App() {
         // handle other value
         console.log('Primitive:', key, data);
       }
-      return '';
+      return currentNodeId;
     }
 
     convertJsonData(jsonValue, null, 'root', '$', 0);
