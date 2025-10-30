@@ -74,7 +74,15 @@ function App() {
       console.log('isObject:', isObject);
 
       if (isObject) {
-        // TODO : handle object operation
+        nodes.push({
+          id: currentNodeId,
+          type: 'object',
+          label: key,
+          path: path,
+          x: 0,
+          y: 0,
+        });
+
         console.log('isObject', key);
       } else if (isArray) {
         // TODO : handle array operations
@@ -98,8 +106,8 @@ function App() {
       const { nodes: newNodes, edges: newEdges } =
         convertJsonToNodeAndEdges(parseValue);
 
-      console.log(newNodes);
-      console.log(newEdges);
+      console.log('newNodes', newNodes);
+      console.log('newEdges', newEdges);
       setNodes(newNodes);
       setEdges(newEdges);
       setError('');
