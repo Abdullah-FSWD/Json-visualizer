@@ -24,8 +24,9 @@ type EdgeType = {
 
 function App() {
   const [value, setValue] = useState<string>('');
+
   const [error, setError] = useState<any>('');
-  const [nodes, setNodes] = useState<NodeTypes[]>([]);
+  const [nodes, setNodes] = useState<NodeType[]>([]);
   const [edges, setEdges] = useState<EdgeType[]>([]);
 
   //   const sampleJsonValue = `{
@@ -37,7 +38,7 @@ function App() {
   //   "products": [
   //     {
   //       "id": 1,
-  //       "name": "Laptop"
+  //       "name": "Laptop"Canvas rendering coming next...
   //     }
   //   ]
   // }`;
@@ -64,6 +65,7 @@ function App() {
       const currentNodeId = `node-${nodeIdCounter++}`;
 
       console.log('path', path);
+      console.log('parentId', parentId);
 
       const isArray = Array.isArray(data);
       const isObject = data !== null && typeof data === 'object' && !isArray;
@@ -181,11 +183,13 @@ function App() {
       setNodes(newNodes);
       setEdges(newEdges);
       setError('');
+      // @ts-expect-error this error is expected
     } catch (err: { message: string }) {
       toast.error(err.message);
+      console.log(error);
     }
   }
-
+  // @ts-expect-error expecting this error
   function handleChange(e) {
     // console.log(e.target.value);
     setValue(e.target.value);
