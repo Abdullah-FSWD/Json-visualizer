@@ -7,22 +7,6 @@ import { toast } from 'sonner';
 import dagre from '@dagrejs/dagre';
 import { Background, ReactFlow, type Edge, type Node } from '@xyflow/react';
 
-type NodeType = {
-  id: string;
-  type: 'object' | 'array' | 'primitive';
-  label: string;
-  path: string;
-  x: number;
-  y: number;
-};
-
-type EdgeType = {
-  id: string;
-  source: string;
-  target: string;
-  label: string;
-};
-
 function App() {
   const [value, setValue] = useState<string>('');
 
@@ -74,11 +58,13 @@ function App() {
       if (isObject) {
         nodes.push({
           id: currentNodeId,
-          type: 'object',
-          label: key,
-          path: path,
-          x: 0,
-          y: 0,
+          type: 'default',
+          data: {
+            label: key,
+            path: path,
+            nodeType: 'object',
+          },
+          position: { x: 0, y: 0 },
         });
 
         Object.keys(data).forEach((childKey) => {
@@ -103,11 +89,13 @@ function App() {
       } else if (isArray) {
         nodes.push({
           id: currentNodeId,
-          type: 'array',
-          label: `${key}[]`,
-          path: path,
-          x: 0,
-          y: 0,
+          type: 'default',
+          data: {
+            label: `${key}[]`,
+            path: path,
+            nodeType: 'array',
+          },
+          position: { x: 0, y: 0 },
         });
 
         data.forEach((element: any, index: number) => {
@@ -131,11 +119,13 @@ function App() {
         const nodeValue = typeof data === 'string' ? `"${data}"` : String(data);
         nodes.push({
           id: currentNodeId,
-          type: 'primitive',
-          label: `${key}: ${nodeValue}`,
-          path: path,
-          x: 0,
-          y: 0,
+          type: 'default',
+          data: {
+            label: `${key}: ${value}`,
+            path: path,
+            nodeType: 'primitive',
+          },
+          position: { x: 0, y: 0 },
         });
         console.log('Primitive:', key, data);
       }
@@ -143,31 +133,6 @@ function App() {
     }
 
     convertJsonData(jsonValue, null, 'root', '$', 0);
-
-    const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(
-      () => ({})
-    );
-
-    const nodeWidth = 172;
-    const nodeHeight = 36;
-
-    dagreGraph.setGraph({ rankdir: 'TB' });
-
-    nodes.forEach((node) => {
-      dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
-    });
-
-    edges.forEach((edge) => {
-      dagreGraph.setEdge(edge.source, edge.target);
-    });
-
-    dagre.layout(dagreGraph);
-
-    nodes.forEach((node) => {
-      const nodeWithPosition = dagreGraph.node(node.id);
-      node.x = nodeWithPosition.x;
-      node.y = nodeWithPosition.y;
-    });
 
     return { nodes, edges };
   }
