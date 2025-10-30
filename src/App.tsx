@@ -5,6 +5,7 @@ import { Separator } from './components/ui/separator';
 import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
 import dagre from '@dagrejs/dagre';
+import { Background, ReactFlow, type Edge, type Node } from '@xyflow/react';
 
 type NodeType = {
   id: string;
@@ -26,8 +27,8 @@ function App() {
   const [value, setValue] = useState<string>('');
 
   const [error, setError] = useState<any>('');
-  const [nodes, setNodes] = useState<NodeType[]>([]);
-  const [edges, setEdges] = useState<EdgeType[]>([]);
+  const [nodes, setNodes] = useState<Node[]>([]);
+  const [edges, setEdges] = useState<Edge[]>([]);
 
   //   const sampleJsonValue = `{
   //   "user": {
@@ -208,8 +209,14 @@ function App() {
       </header>
       <div className="w-full my-auto p-2 bg-muted-foreground h-auto flex flex-1 gap-2  ">
         <div className="bg-background p-8 mx-4 rounded-xl flex-none min-w-96 max-w-28">
+          <h2 className="text-xl font-bold mb-4 text-gray-800">
+            Tree Structure
+          </h2>
+          <p className="text-gray-600 mb-4">
+            Generated {nodes.length} nodes and {edges.length} edges
+          </p>
           <Textarea
-            className="min-h-64 max-h-full w-full p-4 border-2 border-gray-300 rounded-lg font-mono mb-4"
+            className=" max-h-full w-full p-4 min-h-2/3 border-2 border-gray-300 rounded-lg font-mono mb-4"
             placeholder="Type your message here."
             value={value}
             onChange={handleChange}
@@ -231,7 +238,6 @@ function App() {
             </Button>
           </div>
         </div>
-        {/* {nodes.length > 0 && ( */}
         <div className="bg-white rounded-lg shadow-md p-8 flex-1">
           <h2 className="text-xl font-bold mb-4 text-gray-800">
             Tree Structure
@@ -240,16 +246,14 @@ function App() {
             Generated {nodes.length} nodes and {edges.length} edges
           </p>
 
-          <div className="border-2 border-gray-300 rounded-lg bg-gray-50 h-96">
-            <p className="text-center text-gray-400 pt-40">
-              all nodes come inside this div
-            </p>
+          <div className="h-[600px] border-2 border-gray-300 rounded-lg">
+            <ReactFlow nodes={nodes} edges={edges} fitView>
+              <Background />
+            </ReactFlow>
           </div>
         </div>
-        {/* )} */}
       </div>
       <Separator />
-      {/* </div> */}
     </>
   );
 }
