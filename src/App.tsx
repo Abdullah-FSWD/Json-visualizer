@@ -87,8 +87,6 @@ function App() {
             level + 1
           );
 
-          // TODO: Create edge from parent to child
-
           edges.push({
             id: `edge-${currentNodeId}-${childNodeId}`,
             source: currentNodeId,
@@ -99,7 +97,31 @@ function App() {
 
         console.log('isObject', key);
       } else if (isArray) {
-        // TODO : handle array operations
+        nodes.push({
+          id: currentNodeId,
+          type: 'array',
+          label: `${key}[]`,
+          path: path,
+          x: 0,
+          y: 0,
+        });
+
+        data.forEach((element: any, index: number) => {
+          const childPath = `${path}[${index}]`;
+          const childNodeId = convertJsonData(
+            element,
+            currentNodeId,
+            `[${index}]`,
+            childPath,
+            level + 1
+          );
+          edges.push({
+            id: `edge-${currentNodeId}-${childNodeId}`,
+            source: currentNodeId,
+            target: childNodeId,
+            label: `[${index}]`,
+          });
+        });
         console.log('isArray', key);
       } else {
         // handle other value
@@ -189,25 +211,3 @@ function App() {
 }
 
 export default App;
-
-//  <div>
-//       <header className="p-8 shadow-sm ">
-//         <h1 className="text-3xl text-muted-foreground mb-2 font-bold">
-//           JSON Tree Visualizer
-//         </h1>
-//         <p>Visualize your JSON data as a tree structure</p>
-//       </header>
-//       <div className="grid w-full gap-2 max-w-1/4 p-3">
-//         <Textarea
-//           className="min-h-64 max-h-full"
-//           placeholder="Type your message here."
-//           value={value}
-//           onChange={handleChange}
-//         />
-//         <Button type="submit" variant="outline" onClick={handleSubmit}>
-//           Submit
-//         </Button>
-//       </div>
-//       <Separator />
-//       <div className="border border-red-500 w-4/3 ">Hellow world </div>
-//     </div>
