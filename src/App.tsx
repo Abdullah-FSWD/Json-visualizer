@@ -27,18 +27,25 @@ function App() {
   const [nodes, setNodes] = useState<NodeTypes[]>([]);
   const [edges, setEdges] = useState<EdgeType[]>([]);
 
+  //   const sampleJsonValue = `{
+  //   "user": {
+  //     "name": "Alice",
+  //     "age": 28,
+  //     "email": "alice@example.com"
+  //   },
+  //   "products": [
+  //     {
+  //       "id": 1,
+  //       "name": "Laptop"
+  //     }
+  //   ]
+  // }`;
+
   const sampleJsonValue = `{
   "user": {
     "name": "Alice",
-    "age": 28,
-    "email": "alice@example.com"
-  },
-  "products": [
-    {
-      "id": 1,
-      "name": "Laptop"
-    }
-  ]
+    "age": 28
+  }
 }`;
 
   function convertJsonToNodeAndEdges(jsonValue: any) {
@@ -54,8 +61,17 @@ function App() {
       level: number
     ): string {
       const currentNodeId = `node-${nodeIdCounter++}`;
+
+      console.log('Processing:', key);
+      console.log('Data type:', typeof data);
+      console.log('Is null?:', data === null);
+      console.log('Data:', data);
+
       const isArray = Array.isArray(data);
       const isObject = data !== null && typeof data === 'object' && !isArray;
+
+      console.log('isArray:', isArray);
+      console.log('isObject:', isObject);
 
       if (isObject) {
         // TODO : handle object operation
@@ -65,12 +81,12 @@ function App() {
         console.log('isArray', key);
       } else {
         // handle other value
-        console.log('value1', key, data);
+        console.log('Primitive:', key, data);
       }
       return '';
     }
 
-    convertJsonData(value, null, 'root', '$', 0);
+    convertJsonData(jsonValue, null, 'root', '$', 0);
 
     return { nodes, edges };
   }
@@ -78,6 +94,7 @@ function App() {
   function handleSubmit() {
     try {
       const parseValue = JSON.parse(value);
+      console.log('parsed value', parseValue);
       const { nodes: newNodes, edges: newEdges } =
         convertJsonToNodeAndEdges(parseValue);
 
