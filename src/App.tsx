@@ -6,6 +6,17 @@ import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
 import dagre from '@dagrejs/dagre';
 import { Background, ReactFlow, type Edge, type Node } from '@xyflow/react';
+import {
+  ObjectNode,
+  ArrayNode,
+  PrimitiveNode,
+} from './components/NodeVisualizer';
+
+const nodeTypes = {
+  object: ObjectNode,
+  array: ArrayNode,
+  primitive: PrimitiveNode,
+};
 
 function App() {
   const [value, setValue] = useState<string>('');
@@ -37,8 +48,8 @@ function App() {
 
   const dagreGraph = new dagre.graphlib.Graph().setDefaultEdgeLabel(() => ({}));
 
-  const nodeWidth = 172;
-  const nodeHeight = 36;
+  const nodeWidth = 220;
+  const nodeHeight = 60;
 
   function getLayoutedElements(nodes: Node[], edges: Edge[], direction = 'TB') {
     const isHorizontal = direction === 'LR';
@@ -94,7 +105,7 @@ function App() {
       if (isObject) {
         nodes.push({
           id: currentNodeId,
-          type: 'default',
+          type: 'object',
           data: {
             label: key,
             path: path,
@@ -125,7 +136,7 @@ function App() {
       } else if (isArray) {
         nodes.push({
           id: currentNodeId,
-          type: 'default',
+          type: 'array',
           data: {
             label: `${key}[]`,
             path: path,
@@ -155,9 +166,9 @@ function App() {
         const nodeValue = typeof data === 'string' ? `"${data}"` : String(data);
         nodes.push({
           id: currentNodeId,
-          type: 'default',
+          type: 'primitive',
           data: {
-            label: `${key}: ${value}`,
+            label: `${key}: ${nodeValue}`,
             path: path,
             nodeType: 'primitive',
           },
@@ -250,7 +261,12 @@ function App() {
           </p>
 
           <div className="h-[600px] border-2 border-gray-300 rounded-lg">
-            <ReactFlow nodes={nodes} edges={edges} fitView>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              nodeTypes={nodeTypes}
+              fitView
+            >
               <Background />
             </ReactFlow>
           </div>
